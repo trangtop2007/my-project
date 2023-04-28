@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TMess APP</title>
+    <link rel="shortcut icon" href="https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/Facebook_Messenger_logo_2013.svg/640px-Facebook_Messenger_logo_2013.svg.png" type="image/x-icon">
+    <link rel="stylesheet" href="./fontawesome/css/all.css">
+    <link rel="stylesheet" href="https://fontawesome.com/icons/chevron-right?f=sharp&s=solid">    
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
+</head>
+<body>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body{
+            height: 100vh;
+            padding-left: 65px;
+            overflow: hidden;
+            
+        }
+        #chev{
+            display: none;
+            cursor: pointer;
+            position: absolute;
+            color: rgb(0, 0, 0);
+            padding: 0px 3px;
+            border-radius: 50%;
+            background-color: rgb(231, 217, 17);
+            right: -15px;
+            font-size: 20px;
+            top: 15px;
+        }
+        
+        .slidebar{
+            z-index: 999;
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            width:65px;
+            background-color: rgb(19, 20, 42);
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            transition: all 0.5s linear;
+        }
+        .slidebar a span,.exit span{
+            display: none;
+        }
+        #wrap-icon{
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            margin-top: 20px;
+            margin-bottom: 30px;
+           
+        }
+        
+        #wrap-icon span{
+            color: white;
+            margin-left: 10px;
+        }
+        #logo{
+            height: 20px;
+            width: auto;
+            margin-left: 18px;
+        }
+        .slidebar a:not(#wrap-icon){
+            text-decoration: none ;
+            color: white;
+            margin: 20px 0px 0px 0px;
+            display: flex;
+            align-items: center;
+        }
+        .slidebar a span{
+            font-size: 17px;
+        }
+        .slidebar a i{
+            font-size: 25px;
+            margin: 0px 15px 0px 17px;
+        }
+
+        .exit {
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            color: white;
+            transform: translate(17px,200px);
+            
+        }
+        .exit i{
+            font-size: 25px;
+            margin-right: 5px;
+        }
+        .exit span{
+            font-size: 17px;
+        }
+        
+        
+        main{
+            
+            height: 100vh;
+            display: flex;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        }
+        .friend{
+            height: 100%;
+            width: 360px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            border: 1px solid rgb(206, 203, 203);
+        }
+        .friend div:not(.wrap-info-friend){
+            width: 90%;
+        }
+        .wrap-friend-header{
+            display: flex;
+            justify-content:space-between;
+            align-items: center;
+            margin-top:8px;
+        }
+        .wrap-friend-header div{
+            display: flex;
+            justify-content: flex-end;
+        }
+        .wrap-friend-header >span{
+            font-size: 27px;
+            font-weight: 600;
+        }
+        .wrap-friend-header div span{
+            font-size: 23px;
+            padding:2px 6px;
+            border-radius: 50%;
+            background-color: #f0f2f5;
+            cursor: pointer;
+            
+        }
+        .wrap-friend-header div span:nth-child(1){
+            margin-right: 20px;
+        }
+        .wrap-search-friend input{
+            width: 100%;
+            height: 40px;
+            border-radius: 20px;
+            background-color: #f0f2f5;
+            border: none;
+            outline: none;
+            font-size: 16px;
+            padding-left: 40px;
+            z-index: 0;
+           
+        }
+        .wrap-search-friend {
+            position: relative;
+            margin-top: 20px;
+        }
+        .wrap-search-friend span{
+            position: absolute;
+            font-size: 15px;
+            top: 10px;
+            color: gray;
+            left: 17px;
+        }
+        .wrap-info-friend{
+            margin-top: 20px;
+            overflow-y: scroll;
+            width: 100%;
+            
+        }
+        .wrap-info-friend a{ 
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            border-radius: 10px;
+            padding: 7px 0px;
+            margin-top: 10px;
+        }
+        .wrap-info-friend a:hover{
+            background-color: #f0f2f5;
+        }
+        .wrap-info-friend a div{
+            display: flex;
+            flex-direction: column;
+            margin-left: 15px;
+        }
+        .wrap-info-friend a div span:nth-child(1){
+            color: black;
+            font-weight: 500;
+        }
+        .wrap-info-friend a div span:nth-child(2){
+            color: gray;
+            font-size: 13px;
+        }
+        .img-friend{
+            height: 40px;
+            width: auto;
+            border-radius: 50%;
+            margin-left: 20px;
+        }
+        .wrap-chat{
+            width: 620px;
+            height: 100vh;
+            border: 1px solid gray;
+        }
+        .wrap-chat-header{
+            display: flex;
+            justify-content: space-between;
+            border-bottom: 1px solid gray;
+            align-items: center;
+            height: 64px;
+        }
+        .wrap-chat-header-logo img{
+            height: 40px;
+            width: 40px;
+            border-radius: 50%;
+        }
+        .wrap-chat-header-logo{
+            display: flex;
+            margin-left: 10px;
+            text-decoration: none;
+            height: 85%;
+            padding: 0px 10px;
+            justify-content: center;
+            align-items: center;
+            border-radius: 10px;
+          
+        }
+        .wrap-chat-header-logo div{
+            display: flex;
+            flex-direction: column;
+            margin-left: 7px;
+            
+        }
+        .wrap-chat-header-logo:hover{
+            background-color: rgb(242, 242, 242);
+            
+        }
+        .wrap-chat-header-logo div span:nth-child(1){
+            font-size: 15px;
+            font-weight: 500;
+            color: black;
+        }
+        .wrap-chat-header-logo div span:nth-child(2){
+            font-size: 14px;
+            color: gray;
+        }
+        .wrap-video-call-more{
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            gap: 20px;
+            margin-right: 10px;
+        }
+        .wrap-video-call-more svg{
+            background-color: rgb(242, 242, 242);
+            
+            border-radius: 50%;
+        }
+    </style>
+    <div class="slidebar">  
+        <span id="chev"><i class='bx bx-chevron-right'></i></span>
+        <a href="" id="wrap-icon">
+            <img src="./img/Tmess.png" alt="" id="logo">
+            <span>NguyenPhongTrang</span>
+        </a>
+        <a href="">
+            <i class='bx bx-grid-alt'></i>            
+            <span>Home</span>    
+        </a>
+        <a href="">
+            <i class='bx bx-user'></i>            
+            <span>User</span>
+        </a>
+        <a href="">
+            <i class='bx bx-bell'></i>
+            <span>Notification</span>
+        </a>
+        <a href="">
+            <i class='bx bx-heart'></i>
+            <span>Favorties</span>
+        </a>
+        <a href="">
+            <i class='bx bx-bookmark'></i>
+            <span>Favorties</span>
+        </a>
+        <a href="">
+            <i class='bx bx-chat'></i>
+            <span>Chat</span>
+        </a>
+        <div class="exit">
+            <i class='bx bx-exit'></i>
+            <span>Close</span>
+        </div>
+    </div>
+    <main>
+        <div class="friend">
+            <div class="wrap-friend-header">
+                <span>Chat</span>
+                <div>
+                    <span><i class='bx bxs-camera-home'></i></span>
+                    <span><i class='bx bxs-bookmark-plus'></i></span>
+                </div>
+            </div>
+            <div class="wrap-search-friend">
+                <span><i class="fa-solid fa-magnifying-glass"></i></span>
+                <input type="text" name="search-friend" id="search-friend" placeholder="Tìm kiếm trên Messenger">
+            </div>
+            <div class="wrap-info-friend">
+                <a href="">
+                    <img src="https://media.istockphoto.com/id/1273297982/vi/vec-to/bi%E1%BB%83u-t%C6%B0%E1%BB%A3ng-h%E1%BB%93-s%C6%A1-avatar-m%E1%BA%B7c-%C4%91%E1%BB%8Bnh-ch%E1%BB%97-d%C3%A0nh-s%E1%BA%B5n-%E1%BA%A3nh-m%C3%A0u-x%C3%A1m-v%E1%BA%BD-tay-hi%E1%BB%87n-%C4%91%E1%BA%A1i-bi%E1%BB%83u-t%C6%B0%E1%BB%A3ng-h%E1%BB%93-s%C6%A1.jpg?s=612x612&w=0&k=20&c=6zP3baumoUPbZTtSWtmToItOmgti4FXPdyjxBbv8elk=" alt="" class="img-friend">
+                    <div class="wrap-info-friend1">
+                        <span>Username</span>
+                        <span>Bạn: <i class="fa-solid fa-heart"></i></span>
+                    </div>
+                </a>
+                <a href="">
+                    <img src="https://media.istockphoto.com/id/1273297982/vi/vec-to/bi%E1%BB%83u-t%C6%B0%E1%BB%A3ng-h%E1%BB%93-s%C6%A1-avatar-m%E1%BA%B7c-%C4%91%E1%BB%8Bnh-ch%E1%BB%97-d%C3%A0nh-s%E1%BA%B5n-%E1%BA%A3nh-m%C3%A0u-x%C3%A1m-v%E1%BA%BD-tay-hi%E1%BB%87n-%C4%91%E1%BA%A1i-bi%E1%BB%83u-t%C6%B0%E1%BB%A3ng-h%E1%BB%93-s%C6%A1.jpg?s=612x612&w=0&k=20&c=6zP3baumoUPbZTtSWtmToItOmgti4FXPdyjxBbv8elk=" alt="" class="img-friend">
+                    <div class="wrap-info-friend1">
+                        <span>Username</span>
+                        <span>Bạn: <i class="fa-solid fa-heart"></i></span>
+                    </div>
+                </a><a href="">
+                    <img src="https://media.istockphoto.com/id/1273297982/vi/vec-to/bi%E1%BB%83u-t%C6%B0%E1%BB%A3ng-h%E1%BB%93-s%C6%A1-avatar-m%E1%BA%B7c-%C4%91%E1%BB%8Bnh-ch%E1%BB%97-d%C3%A0nh-s%E1%BA%B5n-%E1%BA%A3nh-m%C3%A0u-x%C3%A1m-v%E1%BA%BD-tay-hi%E1%BB%87n-%C4%91%E1%BA%A1i-bi%E1%BB%83u-t%C6%B0%E1%BB%A3ng-h%E1%BB%93-s%C6%A1.jpg?s=612x612&w=0&k=20&c=6zP3baumoUPbZTtSWtmToItOmgti4FXPdyjxBbv8elk=" alt="" class="img-friend">
+                    <div class="wrap-info-friend1">
+                        <span>Username</span>
+                        <span>Bạn: <i class="fa-solid fa-heart"></i></span>
+                    </div>
+                </a><a href="">
+                    <img src="https://media.istockphoto.com/id/1273297982/vi/vec-to/bi%E1%BB%83u-t%C6%B0%E1%BB%A3ng-h%E1%BB%93-s%C6%A1-avatar-m%E1%BA%B7c-%C4%91%E1%BB%8Bnh-ch%E1%BB%97-d%C3%A0nh-s%E1%BA%B5n-%E1%BA%A3nh-m%C3%A0u-x%C3%A1m-v%E1%BA%BD-tay-hi%E1%BB%87n-%C4%91%E1%BA%A1i-bi%E1%BB%83u-t%C6%B0%E1%BB%A3ng-h%E1%BB%93-s%C6%A1.jpg?s=612x612&w=0&k=20&c=6zP3baumoUPbZTtSWtmToItOmgti4FXPdyjxBbv8elk=" alt="" class="img-friend">
+                    <div class="wrap-info-friend1">
+                        <span>Username</span>
+                        <span>Bạn: <i class="fa-solid fa-heart"></i></span>
+                    </div>
+                </a><a href="">
+                    <img src="https://media.istockphoto.com/id/1273297982/vi/vec-to/bi%E1%BB%83u-t%C6%B0%E1%BB%A3ng-h%E1%BB%93-s%C6%A1-avatar-m%E1%BA%B7c-%C4%91%E1%BB%8Bnh-ch%E1%BB%97-d%C3%A0nh-s%E1%BA%B5n-%E1%BA%A3nh-m%C3%A0u-x%C3%A1m-v%E1%BA%BD-tay-hi%E1%BB%87n-%C4%91%E1%BA%A1i-bi%E1%BB%83u-t%C6%B0%E1%BB%A3ng-h%E1%BB%93-s%C6%A1.jpg?s=612x612&w=0&k=20&c=6zP3baumoUPbZTtSWtmToItOmgti4FXPdyjxBbv8elk=" alt="" class="img-friend">
+                    <div class="wrap-info-friend1">
+                        <span>Username</span>
+                        <span>Bạn: <i class="fa-solid fa-heart"></i></span>
+                    </div>
+                </a><a href="">
+                    <img src="https://media.istockphoto.com/id/1273297982/vi/vec-to/bi%E1%BB%83u-t%C6%B0%E1%BB%A3ng-h%E1%BB%93-s%C6%A1-avatar-m%E1%BA%B7c-%C4%91%E1%BB%8Bnh-ch%E1%BB%97-d%C3%A0nh-s%E1%BA%B5n-%E1%BA%A3nh-m%C3%A0u-x%C3%A1m-v%E1%BA%BD-tay-hi%E1%BB%87n-%C4%91%E1%BA%A1i-bi%E1%BB%83u-t%C6%B0%E1%BB%A3ng-h%E1%BB%93-s%C6%A1.jpg?s=612x612&w=0&k=20&c=6zP3baumoUPbZTtSWtmToItOmgti4FXPdyjxBbv8elk=" alt="" class="img-friend">
+                    <div class="wrap-info-friend1">
+                        <span>Username</span>
+                        <span>Bạn: <i class="fa-solid fa-heart"></i></span>
+                    </div>
+                </a>
+                <a href="">
+                    <img src="https://media.istockphoto.com/id/1273297982/vi/vec-to/bi%E1%BB%83u-t%C6%B0%E1%BB%A3ng-h%E1%BB%93-s%C6%A1-avatar-m%E1%BA%B7c-%C4%91%E1%BB%8Bnh-ch%E1%BB%97-d%C3%A0nh-s%E1%BA%B5n-%E1%BA%A3nh-m%C3%A0u-x%C3%A1m-v%E1%BA%BD-tay-hi%E1%BB%87n-%C4%91%E1%BA%A1i-bi%E1%BB%83u-t%C6%B0%E1%BB%A3ng-h%E1%BB%93-s%C6%A1.jpg?s=612x612&w=0&k=20&c=6zP3baumoUPbZTtSWtmToItOmgti4FXPdyjxBbv8elk=" alt="" class="img-friend">
+                    <div class="wrap-info-friend1">
+                        <span>Username</span>
+                        <span>Bạn: <i class="fa-solid fa-heart"></i></span>
+                    </div>
+                </a><a href="">
+                    <img src="https://media.istockphoto.com/id/1273297982/vi/vec-to/bi%E1%BB%83u-t%C6%B0%E1%BB%A3ng-h%E1%BB%93-s%C6%A1-avatar-m%E1%BA%B7c-%C4%91%E1%BB%8Bnh-ch%E1%BB%97-d%C3%A0nh-s%E1%BA%B5n-%E1%BA%A3nh-m%C3%A0u-x%C3%A1m-v%E1%BA%BD-tay-hi%E1%BB%87n-%C4%91%E1%BA%A1i-bi%E1%BB%83u-t%C6%B0%E1%BB%A3ng-h%E1%BB%93-s%C6%A1.jpg?s=612x612&w=0&k=20&c=6zP3baumoUPbZTtSWtmToItOmgti4FXPdyjxBbv8elk=" alt="" class="img-friend">
+                    <div class="wrap-info-friend1">
+                        <span>Username</span>
+                        <span>Bạn: <i class="fa-solid fa-heart"></i></span>
+                    </div>
+                </a><a href="">
+                    <img src="https://media.istockphoto.com/id/1273297982/vi/vec-to/bi%E1%BB%83u-t%C6%B0%E1%BB%A3ng-h%E1%BB%93-s%C6%A1-avatar-m%E1%BA%B7c-%C4%91%E1%BB%8Bnh-ch%E1%BB%97-d%C3%A0nh-s%E1%BA%B5n-%E1%BA%A3nh-m%C3%A0u-x%C3%A1m-v%E1%BA%BD-tay-hi%E1%BB%87n-%C4%91%E1%BA%A1i-bi%E1%BB%83u-t%C6%B0%E1%BB%A3ng-h%E1%BB%93-s%C6%A1.jpg?s=612x612&w=0&k=20&c=6zP3baumoUPbZTtSWtmToItOmgti4FXPdyjxBbv8elk=" alt="" class="img-friend">
+                    <div class="wrap-info-friend1">
+                        <span>Username</span>
+                        <span>Bạn: <i class="fa-solid fa-heart"></i></span>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div class="wrap-chat">
+            <div class="wrap-chat-header">
+                <a href="" class="wrap-chat-header-logo">
+                    <img src="./img/mbappe.jpg" alt="Thiên tài" title="Thiên tài">
+                    <div>
+                        <span>Nguyễn Phong Tráng</span>
+                        <span>Đang hoạt động</span>
+                    </div>
+                </a>
+                <div class="wrap-video-call-more">
+                    <svg fill="#0084ff" height="30px" role="presentation" viewBox="0 0 36 36" width="30px"><path d="M25.753 28.2c1.07-.357 1.816-1.275 2.423-2.225a2.05 2.05 0 00.037-2.151 4.998 4.998 0 00-.723-.963 11.594 11.594 0 00-2.888-2.112c-.58-.299-1.272-.212-1.808.159l-2.098 1.452a.472.472 0 01-.437.055 11.557 11.557 0 01-4.045-2.63 11.554 11.554 0 01-2.63-4.044.472.472 0 01.056-.437l1.453-2.098c.37-.536.457-1.228.158-1.807A11.587 11.587 0 0013.14 8.51a4.995 4.995 0 00-.963-.723 2.05 2.05 0 00-2.15.037c-.951.607-1.87 1.353-2.225 2.424-1.174 3.527 1.187 8.461 5.338 12.613 4.152 4.151 9.086 6.512 12.614 5.338z"></path></svg>
+                    <svg fill="#0084ff" height="34px" role="presentation" viewBox="0 0 36 36" width="34px"><path d="M9 9.5a4 4 0 00-4 4v9a4 4 0 004 4h10a4 4 0 004-4v-9a4 4 0 00-4-4H9zm16.829 12.032l3.723 1.861A1 1 0 0031 22.5v-9a1 1 0 00-1.448-.894l-3.723 1.861A1.5 1.5 0 0025 15.81v4.38a1.5 1.5 0 00.829 1.342z"></path></svg>
+                    <svg fill="#0084ff" height="28px" role="presentation" viewBox="0 0 36 36" width="28px"><path clip-rule="evenodd" d="M18 29C24.0751 29 29 24.0751 29 18C29 11.9249 24.0751 7 18 7C11.9249 7 7 11.9249 7 18C7 24.0751 11.9249 29 18 29ZM19.5 18C19.5 18.8284 18.8284 19.5 18 19.5C17.1716 19.5 16.5 18.8284 16.5 18C16.5 17.1716 17.1716 16.5 18 16.5C18.8284 16.5 19.5 17.1716 19.5 18ZM23 19.5C23.8284 19.5 24.5 18.8284 24.5 18C24.5 17.1716 23.8284 16.5 23 16.5C22.1716 16.5 21.5 17.1716 21.5 18C21.5 18.8284 22.1716 19.5 23 19.5ZM14.5 18C14.5 18.8284 13.8284 19.5 13 19.5C12.1716 19.5 11.5 18.8284 11.5 18C11.5 17.1716 12.1716 16.5 13 16.5C13.8284 16.5 14.5 17.1716 14.5 18Z" fill="#0084ff" fill-rule="evenodd"></path></svg>
+                </div>
+            </div>
+        </div>
+    </main> 
+    
+    <script>
+        var chev=document.querySelector("#chev")
+        var slidebar=document.querySelector(".slidebar")
+        var hidden=document.querySelectorAll(".slidebar a span")
+        var exit=document.querySelector(".exit")
+        var textExit=document.querySelector(".exit span")
+        chev.addEventListener("click",function(){
+            if (slidebar.style.width=="220px"){
+                slidebar.style.width=""
+                textExit.style.display="none"
+                hidden.forEach(function(box){
+                    box.style.display="none"
+                })
+            }
+            else{                
+                slidebar.style.width="220px"
+                textExit.style.display="block"
+                hidden.forEach(function(box){
+                    box.style.display="inline-block"
+                })
+            }
+            
+        })
+        slidebar.addEventListener("mouseover",function(){
+            chev.style.display="block"
+        })
+        slidebar.addEventListener("mouseout",function(){
+            if (slidebar.style.width=="220px"){
+                chev.style.display="block"
+            }
+            else{
+                chev.style.display="none"
+            }
+        })
+        var friend=document.querySelectorAll(".wrap-info-friend a");
+        
+        friend.forEach(function(items){
+            console.log(items)
+            items.addEventListener("click",function(e){
+                items.style.backgroundColor="f0f2f5"
+                e.preventDefault()
+            })
+        })
+    </script>
+</body>
+</html>
