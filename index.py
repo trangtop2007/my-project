@@ -1,2 +1,2 @@
-import pyautogui,time
-time.sleep(1)
+a=[int(i) for i in input().split()]
+print(a)

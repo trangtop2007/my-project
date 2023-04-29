@@ -6,8 +6,8 @@ require "phpmailer/src/Exception.php";
 require "phpmailer/src/PHPMailer.php";
 require "phpmailer/src/SMTP.php";
 
-if ($send==true){
-    $code=1999;
+if (isset($_POST["send"])){
+  
     $mail=new PHPMailer(true);
 
 
